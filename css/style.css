@@ -1,0 +1,20 @@
+#buttonDiv {
+    margin-top: 50px !important;
+    margin-bottom: 40px !important;
+}
+
+#mainContainer {
+    margin-top: 40px !important;
+}
+
+#filterName {
+    margin-top: 20px !important;
+}
+
+.input-md {
+    width: 400px !important;
+}
+
+#companyButtons{
+    margin-bottom: 20px !important;
+}
