@@ -75,7 +75,8 @@ function newCompanytab (company) {
     nextTabPanelId ++;
 }
 
-$( "#submitCompany" ).click(function() {
+$("#submitCompany" ).click(function() {
+
     if ($('#CompanyName').val().length < 1){
         $("#submitCompany").removeAttr("data-dismiss");
         alert("Please enter the name of the Company");
@@ -99,10 +100,20 @@ $( "#submitCompany" ).click(function() {
     else {
         $("#submitCompany").attr("data-dismiss", "modal");
         var newCompany = getFormCompany();
-        allCompanies.push(newCompany);
-        localStorage['allCompanies'] = JSON.stringify(allCompanies);
-        newCompanytab(newCompany.CompanyName);
-        $('#companyForm').trigger("reset");
+        if (!validateEmail(newCompany.CompanyEmail)){
+            $("#submitCompany").removeAttr("data-dismiss");
+            alert("Please enter a valid email address");
+        }
+        else if (!validatePhoneNumber(newCompany.CompanyPhoneNumber)){
+            $("#submitCompany").removeAttr("data-dismiss");
+            alert("Please enter a valid phone number");
+        }
+        else{
+            allCompanies.push(newCompany);
+            localStorage['allCompanies'] = JSON.stringify(allCompanies);
+            newCompanytab(newCompany.CompanyName);
+            $('#companyForm').trigger("reset");
+        }
     }
 });
 
@@ -180,11 +191,23 @@ $( "#submitPerson" ).click(function() {
     else {
         $("#submitPerson").attr("data-dismiss", "modal");
         var newPerson = getFormPerson();
-        allPeople.push(newPerson);
-        localStorage['allPeople'] = JSON.stringify(allPeople);
-        $( "#AllContactsFilter" ).trigger( "click" );
-        displayAllContacts();
-        $('#personForm').trigger("reset");
+
+        if (!validateEmail(newPerson.PersonEmail)){
+            $("#submitPerson").removeAttr("data-dismiss");
+            alert("Please enter a valid email address");
+        }
+        else if (!validatePhoneNumber(newPerson.PersonPhoneNumber)){
+            $("#submitPerson").removeAttr("data-dismiss");
+            alert("Please enter a valid phone number");
+        }
+
+        else {
+            allPeople.push(newPerson);
+            localStorage['allPeople'] = JSON.stringify(allPeople);
+            $( "#AllContactsFilter" ).trigger( "click" );
+            displayAllContacts();
+            $('#personForm').trigger("reset");
+        }
     }
 });
 
@@ -194,8 +217,10 @@ function displayAllContacts (){
     var tempPerson = new Object();
     for (var i = 0; i < m; i++) {
         tempPerson = allPeople[i];
+        var phoneNumber = tempPerson.PersonPhoneNumber;
+        phoneNumber = phoneNumber.replace(/\s/g, '');
         $("#contactTableBody").append('<tr> <td> ' + tempPerson.PersonCompany + ' </td> <td> ' + tempPerson.NameSurname + ' </td> <td>' +
-        tempPerson.PersonPhoneNumber + ' </td> <td> ' + tempPerson.PersonEmail + ' </td> <th> <button type="button" class="btn btn btn-warning editPerson" data-toggle="modal" data-target="#myModal-personEdit" id = '+ tempPerson.PersonPhoneNumber + ' onclick = "editPerson(this)" >Edit...</button>    <button type="button" class="btn btn btn-danger" id = '+ tempPerson.PersonPhoneNumber + ' onclick = "deletePerson(this)" >Delete</button></th> </tr>');
+        tempPerson.PersonPhoneNumber + ' </td> <td> ' + tempPerson.PersonEmail + ' </td> <th> <button type="button" class="btn btn btn-warning editPerson" data-toggle="modal" data-target="#myModal-personEdit" id = '+ phoneNumber + ' onclick = "editPerson(this)" >Edit...</button>    <button type="button" class="btn btn btn-danger" id = '+ phoneNumber + ' onclick = "deletePerson(this)" >Delete</button></th> </tr>');
     }
 };
 
@@ -207,7 +232,7 @@ function sortByCompanies (company) {
         if (allPeople[i].PersonCompany == (company)){
             tempPerson = allPeople[i];
             $("#contactTableBody").append('<tr> <td> ' + tempPerson.PersonCompany + ' </td> <td> ' + tempPerson.NameSurname + ' </td> <td>' +
-            tempPerson.PersonPhoneNumber + ' </td> <td> ' + tempPerson.PersonEmail + ' </td> <th> <button type="button" class="btn btn btn-warning editPerson" data-toggle="modal" data-target="#myModal-personEdit" id = '+ tempPerson.PersonPhoneNumber + ' onclick = "editPerson(this)" >Edit...</button>    <button type="button" class="btn btn btn-danger" id = '+ tempPerson.PersonPhoneNumber + ' onclick = "deletePerson(this)" >Delete</button></th> </tr>');
+            tempPerson.PersonPhoneNumber + ' </td> <td> ' + tempPerson.PersonEmail + ' </td> <th> <button type="button" class="btn btn btn-warning editPerson" data-toggle="modal" data-target="#myModal-personEdit" id = '+ phoneNumber + ' onclick = "editPerson(this)" >Edit...</button>    <button type="button" class="btn btn btn-danger" id = '+ phoneNumber + ' onclick = "deletePerson(this)" >Delete</button></th> </tr>');
         }
     }
 }
@@ -268,8 +293,7 @@ function saveNewCompanyDetails() {
     }
 
     else {
-        $("#CompanyModalEditSave").attr("data-dismiss", "modal");
-
+        $("#submitCompany").removeAttr("data-dismiss");
         var p = allCompanies.length;
         var filterCompany = new Object();
 
@@ -281,11 +305,21 @@ function saveNewCompanyDetails() {
         }
 
         var newCompanyData = getEditFormCompany();
-        $("#filterInfo").html(newCompanyData.CompanyAddress + " <br> " + newCompanyData.CompanyEmail + " <br> " + newCompanyData.CompanyPhoneNumber);
-        filterCompany.CompanyPhoneNumber = newCompanyData.CompanyPhoneNumber;
-        filterCompany.CompanyEmail = newCompanyData.CompanyEmail;
-        filterCompany.CompanyAddress = newCompanyData.CompanyAddress;
-        localStorage['allCompanies'] = JSON.stringify(allCompanies);
+
+        if (!validateEmail(newCompanyData.CompanyEmail)){
+            alert("Please enter a valid email address");
+        }
+        else if (!validatePhoneNumber(newCompanyData.CompanyPhoneNumber)){
+            alert("Please enter a valid phone number");
+        }
+        else {
+            $("#CompanyModalEditSave").attr("data-dismiss", "modal");
+            $("#filterInfo").html(newCompanyData.CompanyAddress + " <br> " + newCompanyData.CompanyEmail + " <br> " + newCompanyData.CompanyPhoneNumber);
+            filterCompany.CompanyPhoneNumber = newCompanyData.CompanyPhoneNumber;
+            filterCompany.CompanyEmail = newCompanyData.CompanyEmail;
+            filterCompany.CompanyAddress = newCompanyData.CompanyAddress;
+            localStorage['allCompanies'] = JSON.stringify(allCompanies);
+        }
     }
 };
 
@@ -320,7 +354,10 @@ function editPerson (buttonSelected){
     lastPersonEdited = phoneOfPersonChanged;
 
     for (var i = 0; i < t; i++) {
-        if (allPeople[i].PersonPhoneNumber == (phoneOfPersonChanged)){
+        var phoneNumber = allPeople[i].PersonPhoneNumber;
+        phoneNumber = phoneNumber.replace(/\s/g, '');
+
+        if (phoneNumber == (phoneOfPersonChanged)){
             filterPerson = allPeople[i];
             break;
         }
@@ -348,13 +385,14 @@ function saveNewPersonDetails() {
     }
 
     else {
-        $("#PersonModalEditSave").attr("data-dismiss", "modal");
-
         var p = allPeople.length;
         var filterPerson = new Object();
 
         for (var i = 0; i < p; i++) {
-            if (allPeople[i].PersonPhoneNumber == (lastPersonEdited)){
+            var phoneNumber = allPeople[i].PersonPhoneNumber;
+            phoneNumber = phoneNumber.replace(/\s/g, '');
+
+            if (phoneNumber == (lastPersonEdited)){
                 filterPerson = allPeople[i];
                 break;
             }
@@ -362,15 +400,37 @@ function saveNewPersonDetails() {
 
         var newPersonData = getEditFormPerson();
 
-        filterPerson.PersonCompany = newPersonData.PersonCompany;
-        filterPerson.PersonPhoneNumber = newPersonData.PersonPhoneNumber;
-        filterPerson.PersonEmail = newPersonData.PersonEmail;
-        localStorage['allPeople'] = JSON.stringify(allPeople);
+        if (!validateEmail(newPersonData.PersonEmail)){
+            $("#submitPerson").removeAttr("data-dismiss");
+            alert("Please enter a valid email address");
+        }
+        else if (!validatePhoneNumber(newPersonData.PersonPhoneNumber)){
+            $("#submitPerson").removeAttr("data-dismiss");
+            alert("Please enter a valid phone number");
+        }
 
-        $(lastTabSelected).trigger( "click" );
-        //sortByCompanies(lastCompanySelected);
+        else{
+            $("#PersonModalEditSave").attr("data-dismiss", "modal");
+            filterPerson.PersonCompany = newPersonData.PersonCompany;
+            filterPerson.PersonPhoneNumber = newPersonData.PersonPhoneNumber;
+            filterPerson.PersonEmail = newPersonData.PersonEmail;
+            localStorage['allPeople'] = JSON.stringify(allPeople);
+
+            $(lastTabSelected).trigger( "click" );
+        }
+
     }
 };
+
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
+function validatePhoneNumber(phoneNumber) {
+    var re = /^\(?(?:(?:0(?:0|11)\)?[\s-]?\(?|\+)44\)?[\s-]?\(?(?:0\)?[\s-]?\(?)?|0)(?:\d{2}\)?[\s-]?\d{4}[\s-]?\d{4}|\d{3}\)?[\s-]?\d{3}[\s-]?\d{3,4}|\d{4}\)?[\s-]?(?:\d{5}|\d{3}[\s-]?\d{3})|\d{5}\)?[\s-]?\d{4,5}|8(?:00[\s-]?11[\s-]?11|45[\s-]?46[\s-]?4\d))(?:(?:[\s-]?(?:x|ext\.?\s?|\#)\d+)?)$/;
+    return re.test(String(phoneNumber).toLowerCase());
+}
 
 // $( ".nav-link" ).click(function() {
 //     alert("alert");
