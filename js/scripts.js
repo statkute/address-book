@@ -252,7 +252,6 @@ $( "#editCompany" ).click(function() {
 });
 
 function saveNewCompanyDetails() {
-    alert("button save clicked");
     if ($('#CompanyPhoneNumberEdit').val().length < 1){
         $("#submitCompany").removeAttr("data-dismiss");
         alert("Please enter a phone number");
