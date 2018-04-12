@@ -36,6 +36,8 @@ $( document ).ready(function() {
         }
     }
 
+    $( "#AllContactsFilter" ).trigger( "click" );
+
 });
 
 var allCompanies = [];
@@ -100,6 +102,7 @@ $( "#submitCompany" ).click(function() {
         allCompanies.push(newCompany);
         localStorage['allCompanies'] = JSON.stringify(allCompanies);
         newCompanytab(newCompany.CompanyName);
+        $('#companyForm').trigger("reset");
     }
 });
 
@@ -181,6 +184,7 @@ $( "#submitPerson" ).click(function() {
         localStorage['allPeople'] = JSON.stringify(allPeople);
         $( "#AllContactsFilter" ).trigger( "click" );
         displayAllContacts();
+        $('#personForm').trigger("reset");
     }
 });
 
@@ -209,14 +213,17 @@ function sortByCompanies (company) {
 }
 
 function deleteCompany() {
+    var lastT = lastTabSelected;
+    var lastC = lastCompanySelected;
+
     $( "#AllContactsFilter" ).trigger( "click" );
-    lastTabSelected.remove();
+    lastT.remove();
 
     var p = allCompanies.length;
     var index;
 
     for (var i = 0; i < p; i++) {
-        if (allCompanies[i].CompanyName == (lastCompanySelected)){
+        if (allCompanies[i].CompanyName == (lastC)){
             index = i;
             break;
         }
@@ -285,13 +292,13 @@ function saveNewCompanyDetails() {
 
 function deletePerson(button) {
     var nameToBeDeleted = "";
-    nameToBeDeleted = button.id;
+    personPhoneToBeDeleted = button.id;
 
     var r = allPeople.length;
     var index;
 
     for (var i = 0; i < r; i++) {
-        if (allPeople[i].NameSurname == (nameToBeDeleted)){
+        if (allPeople[i].PersonPhoneNumber == (personPhoneToBeDeleted)){
             index = i;
             break;
         }
@@ -303,6 +310,8 @@ function deletePerson(button) {
 
     button.closest('tr').remove ();
     localStorage['allPeople'] = JSON.stringify(allPeople);
+
+    // lastTabSelected.trigger( "click" );
 }
 
 function editPerson (buttonSelected){
@@ -359,7 +368,8 @@ function saveNewPersonDetails() {
         filterPerson.PersonEmail = newPersonData.PersonEmail;
         localStorage['allPeople'] = JSON.stringify(allPeople);
 
-        sortByCompanies(lastCompanySelected);
+        $(lastTabSelected).trigger( "click" );
+        //sortByCompanies(lastCompanySelected);
     }
 };
 
