@@ -1,377 +1,314 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Address book</title>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Address book</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+    </head>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-
-  </head>
-  <body>
-
-    <div class="container-fluid">
-	<div class="row">
-		<div class="col-md-12" id = "mainContainer">
-			<div class="page-header">
-				<h1>
-					Address book <small>exercise for 'Administrate'</small>
-				</h1>
-				<grammarly>
-					<div class="_1BN1N Kzi1t _2DJZN">
-						<div class="_1HjH7">
-							<div class="_3qe6h">
-							</div>
-						</div>
-					</div>
-				</grammarly>
-			</div>
-			<div class="row" id="buttonDiv">
-				<div class="col-md-12">
-
-					<button type="button" class="btn btn-block btn-md btn-primary" data-toggle="modal" data-target="#myModal-company">
-						Add a company ...
-					</button>
-					<button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#myModal-person">
-						Add a person ...
-					</button>
-				</div>
-			</div>
-			<div class="tabbable" id="tabs-860011">
-				<ul class="nav nav-tabs" id = tabs>
-					<li class="nav-item tab">
-						<a class="nav-link active" href="#panel-1000000" data-toggle="tab" onclick="changeFilter(this)" id = "AllContactsFilter">All Contacts</a>
-					</li>
-				</ul>
-				<div class="tab-content" id = "tabContent">
-					<div class="tab-pane active" id="panel-1000000">
-					</div>
-				</div>
-			</div>
-			<h3 id = "filterName">
-				All Contacts
-			</h3>
-			<address id = "filterInfo">
-				<br>
-			</address>
-
-            <div id = "companyButtons" style="display: none;">
-            <button type = "button" id="editCompany" name="editCompany" class="btn btn-warning" data-toggle="modal" data-target="#myModal-companyEditForm" >Edit ...</button>
-
-            <button type = "button" id="deleteCompany" name="deleteCompany" class="btn btn-danger" onclick="deleteCompany()" >Delete</button>
-
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12" id = "mainContainer">
+                    <div class="page-header">
+                        <h1>
+                            Address book <small>exercise for 'Administrate'</small>
+                        </h1>
+                        <grammarly>
+                            <div class="_1BN1N Kzi1t _2DJZN">
+                                <div class="_1HjH7">
+                                    <div class="_3qe6h">
+                                    </div>
+                                </div>
+                            </div>
+                        </grammarly>
+                    </div>
+                    <div class="row" id="buttonDiv">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-block btn-md btn-primary" data-toggle="modal" data-target="#myModal-company">
+                            Add a company ...
+                            </button>
+                            <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#myModal-person">
+                            Add a person ...
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tabbable" id="tabs-860011">
+                        <ul class="nav nav-tabs" id = tabs>
+                            <li class="nav-item tab">
+                                <a class="nav-link active" href="#panel-1000000" data-toggle="tab" onclick="changeFilter(this)" id = "AllContactsFilter">All Contacts</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id = "tabContent">
+                            <div class="tab-pane active" id="panel-1000000">
+                            </div>
+                        </div>
+                    </div>
+                    <h3 id = "filterName">
+                        All Contacts
+                    </h3>
+                    <address id = "filterInfo">
+                        <br>
+                    </address>
+                    <div id = "companyButtons" style="display: none;">
+                        <button type = "button" id="editCompany" name="editCompany" class="btn btn-warning" data-toggle="modal" data-target="#myModal-companyEditForm" >Edit ...</button>
+                        <button type = "button" id="deleteCompany" name="deleteCompany" class="btn btn-danger" onclick="deleteCompany()" >Delete</button>
+                    </div>
+                    <grammarly>
+                        <div class="_1BN1N Kzi1t _2DJZN">
+                            <div class="_1HjH7">
+                                <div class="_3qe6h">
+                                </div>
+                            </div>
+                        </div>
+                    </grammarly>
+                    <table class="table" id = "contactTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Company
+                                </th>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Phone number
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id = "contactTableBody">
+                        </tbody>
+                    </table>
+                    <grammarly>
+                        <div class="_1BN1N Kzi1t BD-0J _7_mnr _2DJZN">
+                            <div class="_1HjH7">
+                                <div class="_3qe6h">
+                                </div>
+                            </div>
+                        </div>
+                    </grammarly>
+                </div>
             </div>
-			<grammarly>
-				<div class="_1BN1N Kzi1t _2DJZN">
-					<div class="_1HjH7">
-						<div class="_3qe6h">
-						</div>
-					</div>
-				</div>
-			</grammarly>
-			<table class="table" id = "contactTable">
-				<thead>
-					<tr>
-						<th>
-							Company
-						</th>
-						<th>
-							Name
-						</th>
-						<th>
-							Phone number
-						</th>
-						<th>
-							Email
-						</th>
-                        <th>
-
-						</th>
-					</tr>
-				</thead>
-				<tbody id = "contactTableBody">
-
-				</tbody>
-			</table>
-			<grammarly>
-				<div class="_1BN1N Kzi1t BD-0J _7_mnr _2DJZN">
-					<div class="_1HjH7">
-						<div class="_3qe6h">
-						</div>
-					</div>
-				</div>
-			</grammarly>
-		</div>
-	</div>
-</div>
-
-<!-- Modal -->
-<div id="myModal-company" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Company data ...</h4>
-      </div>
-      <div class="modal-body">
-          <form class="form-horizontal" id = "companyForm">
-  <fieldset>
-
-          <!-- Form Name -->
-          <legend>Fill in the details</legend>
-
-          <!-- Text input-->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="Company">Company name</label>
-            <div class="col-md-4">
-            <input id="CompanyName" name="CompanyName" type="text" placeholder="Company" class="form-control input-md" required="">
-
+        </div>
+        <!-- Modal -->
+        <div id="myModal-company" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Company data ...</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" id = "companyForm">
+                            <fieldset>
+                                <!-- Form Name -->
+                                <legend>Fill in the details</legend>
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="Company">Company name</label>
+                                    <div class="col-md-4">
+                                        <input id="CompanyName" name="CompanyName" type="text" placeholder="Company" class="form-control input-md" required="">
+                                    </div>
+                                </div>
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="Phone number">Phone number</label>
+                                    <div class="col-md-4">
+                                        <input id="CompanyPhoneNumber" name="CompanyPhoneNumber" type="text" placeholder="07712345678" class="form-control input-md" required="">
+                                    </div>
+                                </div>
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="email">Email</label>
+                                    <div class="col-md-4">
+                                        <input id="CompanyEmail" name="CompanyEmail" type="text" placeholder="example@company.com" class="form-control input-md" required="">
+                                    </div>
+                                </div>
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="Address">Address</label>
+                                    <div class="col-md-4">
+                                        <input id="CompanyAddress" name="CompanyAddress" type="text" placeholder="Address" class="form-control input-md" required="">
+                                    </div>
+                                </div>
+                                <!-- Button -->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="submitCompany"></label>
+                                    <div class="col-md-4">
+                                        <button type = "button" id="submitCompany" name="submitCompany" class="btn btn-success" >Submit</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
             </div>
-          </div>
-
-          <!-- Text input-->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="Phone number">Phone number</label>
-            <div class="col-md-4">
-            <input id="CompanyPhoneNumber" name="CompanyPhoneNumber" type="text" placeholder="07712345678" class="form-control input-md" required="">
-
+        </div>
+        <!-- Modal -->
+        <div id="myModal-person" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">New person ...</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" id = "personForm">
+                            <fieldset>
+                                <!-- Form Name -->
+                                <legend>Fill in the details</legend>
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="Company">Name</label>
+                                    <div class="col-md-4">
+                                        <input id="NameSurname" name="NameSurname" type="text" placeholder="Name Surname" class="form-control input-md" required="">
+                                    </div>
+                                </div>
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="Address">Company</label>
+                                    <div class="col-md-4">
+                                        <input id="PersonCompany" name="PersonCompany" type="text" placeholder="Company" class="form-control input-md" required="">
+                                    </div>
+                                </div>
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="Phone number">Phone number</label>
+                                    <div class="col-md-4">
+                                        <input id="PersonPhoneNumber" name="PersonPhoneNumber" type="text" placeholder="07911123456" class="form-control input-md" required="">
+                                    </div>
+                                </div>
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="email">Email</label>
+                                    <div class="col-md-4">
+                                        <input id="PersonEmail" name="PersonEmail" type="text" placeholder="example@company.com" class="form-control input-md" required="">
+                                    </div>
+                                </div>
+                                <!-- Button -->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="submitPerson"></label>
+                                    <div class="col-md-4">
+                                        <button type = "button" id="submitPerson" name="submitPerson" class="btn btn-success" >Submit</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
             </div>
-          </div>
-
-          <!-- Text input-->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="email">Email</label>
-            <div class="col-md-4">
-            <input id="CompanyEmail" name="CompanyEmail" type="text" placeholder="example@company.com" class="form-control input-md" required="">
-
+        </div>
+        <!-- Modal -->
+        <div id="myModal-companyEditForm" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Company details ...</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" id = "companyEditForm">
+                            <fieldset>
+                                <!-- Form Name -->
+                                <legend>Edit the details</legend>
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="Phone number">Phone number</label>
+                                    <div class="col-md-4">
+                                        <input id="CompanyPhoneNumberEdit" name="CompanyPhoneNumber" type="text" placeholder="07911123456" class="form-control input-md" required="">
+                                    </div>
+                                </div>
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="email">Email</label>
+                                    <div class="col-md-4">
+                                        <input id="CompanyEmailEdit" name="CompanyEmail" type="text" placeholder="example@company.com" class="form-control input-md" required="">
+                                    </div>
+                                </div>
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="Address">Address</label>
+                                    <div class="col-md-4">
+                                        <input id="CompanyAddressEdit" name="CompanyAddress" type="text" placeholder="Address" class="form-control input-md" required="">
+                                    </div>
+                                </div>
+                                <!-- Button -->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="submitCompany"></label>
+                                    <div class="col-md-4">
+                                        <button type = "button" id="CompanyModalEditSave" name="editCompanyModal" class="btn btn-success" onclick="saveNewCompanyDetails()" >Save</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
             </div>
-          </div>
-
-          <!-- Text input-->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="Address">Address</label>
-            <div class="col-md-4">
-            <input id="CompanyAddress" name="CompanyAddress" type="text" placeholder="Address" class="form-control input-md" required="">
-
+        </div>
+        <!-- Modal -->
+        <div id="myModal-personEdit" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Edit person ...</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" id = "personFormEdit">
+                            <fieldset>
+                                <!-- Form Name -->
+                                <legend>Edit the details</legend>
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="Address">Company</label>
+                                    <div class="col-md-4">
+                                        <input id="PersonCompanyEdit" name="PersonCompany" type="text" placeholder="Company" class="form-control input-md" required="">
+                                    </div>
+                                </div>
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="Phone number">Phone number</label>
+                                    <div class="col-md-4">
+                                        <input id="PersonPhoneNumberEdit" name="PersonPhoneNumber" type="text" placeholder="07911123456" class="form-control input-md" required="">
+                                    </div>
+                                </div>
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="email">Email</label>
+                                    <div class="col-md-4">
+                                        <input id="PersonEmailEdit" name="PersonEmail" type="text" placeholder="example@company.com" class="form-control input-md" required="">
+                                    </div>
+                                </div>
+                                <!-- Button -->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="submitPerson"></label>
+                                    <div class="col-md-4">
+                                        <button type = "button" id="PersonModalEditSave" name="submitPersonEditSave" class="btn btn-success" onclick="saveNewPersonDetails()">Save</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
             </div>
-          </div>
+        </div>
 
-          <!-- Button -->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="submitCompany"></label>
-            <div class="col-md-4">
-              <button type = "button" id="submitCompany" name="submitCompany" class="btn btn-success" >Submit</button>
-            </div>
-          </div>
-
-          </fieldset>
-          </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Modal -->
-<div id="myModal-person" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">New person ...</h4>
-      </div>
-      <div class="modal-body">
-          <form class="form-horizontal" id = "personForm">
-    <fieldset>
-
-          <!-- Form Name -->
-          <legend>Fill in the details</legend>
-
-          <!-- Text input-->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="Company">Name</label>
-            <div class="col-md-4">
-            <input id="NameSurname" name="NameSurname" type="text" placeholder="Name Surname" class="form-control input-md" required="">
-
-            </div>
-          </div>
-
-          <!-- Text input-->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="Address">Company</label>
-            <div class="col-md-4">
-            <input id="PersonCompany" name="PersonCompany" type="text" placeholder="Company" class="form-control input-md" required="">
-
-            </div>
-          </div>
-
-          <!-- Text input-->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="Phone number">Phone number</label>
-            <div class="col-md-4">
-            <input id="PersonPhoneNumber" name="PersonPhoneNumber" type="text" placeholder="07911123456" class="form-control input-md" required="">
-
-            </div>
-          </div>
-
-          <!-- Text input-->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="email">Email</label>
-            <div class="col-md-4">
-            <input id="PersonEmail" name="PersonEmail" type="text" placeholder="example@company.com" class="form-control input-md" required="">
-
-            </div>
-          </div>
-
-          <!-- Button -->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="submitPerson"></label>
-            <div class="col-md-4">
-              <button type = "button" id="submitPerson" name="submitPerson" class="btn btn-success" >Submit</button>
-            </div>
-          </div>
-
-          </fieldset>
-          </form>
-      </div>
-    </div>
-
-    </div>
-</div>
-
-
-<!-- Modal -->
-<div id="myModal-companyEditForm" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Company details ...</h4>
-      </div>
-      <div class="modal-body">
-          <form class="form-horizontal" id = "companyEditForm">
-  <fieldset>
-
-          <!-- Form Name -->
-          <legend>Edit the details</legend>
-
-
-          <!-- Text input-->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="Phone number">Phone number</label>
-            <div class="col-md-4">
-            <input id="CompanyPhoneNumberEdit" name="CompanyPhoneNumber" type="text" placeholder="07911123456" class="form-control input-md" required="">
-
-            </div>
-          </div>
-
-          <!-- Text input-->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="email">Email</label>
-            <div class="col-md-4">
-            <input id="CompanyEmailEdit" name="CompanyEmail" type="text" placeholder="example@company.com" class="form-control input-md" required="">
-
-            </div>
-          </div>
-
-          <!-- Text input-->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="Address">Address</label>
-            <div class="col-md-4">
-            <input id="CompanyAddressEdit" name="CompanyAddress" type="text" placeholder="Address" class="form-control input-md" required="">
-
-            </div>
-          </div>
-
-          <!-- Button -->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="submitCompany"></label>
-            <div class="col-md-4">
-              <button type = "button" id="CompanyModalEditSave" name="editCompanyModal" class="btn btn-success" onclick="saveNewCompanyDetails()" >Save</button>
-            </div>
-          </div>
-
-          </fieldset>
-          </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Modal -->
-<div id="myModal-personEdit" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Edit person ...</h4>
-      </div>
-      <div class="modal-body">
-          <form class="form-horizontal" id = "personFormEdit">
-    <fieldset>
-
-          <!-- Form Name -->
-          <legend>Edit the details</legend>
-
-
-          <!-- Text input-->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="Address">Company</label>
-            <div class="col-md-4">
-            <input id="PersonCompanyEdit" name="PersonCompany" type="text" placeholder="Company" class="form-control input-md" required="">
-
-            </div>
-          </div>
-
-          <!-- Text input-->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="Phone number">Phone number</label>
-            <div class="col-md-4">
-            <input id="PersonPhoneNumberEdit" name="PersonPhoneNumber" type="text" placeholder="07911123456" class="form-control input-md" required="">
-
-            </div>
-          </div>
-
-          <!-- Text input-->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="email">Email</label>
-            <div class="col-md-4">
-            <input id="PersonEmailEdit" name="PersonEmail" type="text" placeholder="example@company.com" class="form-control input-md" required="">
-
-            </div>
-          </div>
-
-          <!-- Button -->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="submitPerson"></label>
-            <div class="col-md-4">
-              <button type = "button" id="PersonModalEditSave" name="submitPersonEditSave" class="btn btn-success" onclick="saveNewPersonDetails()">Save</button>
-            </div>
-          </div>
-
-          </fieldset>
-          </form>
-      </div>
-    </div>
-
-    </div>
-</div>
-
-
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/scripts.js"></script>
-  </body>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/scripts.js"></script>
+        
+    </body>
 </html>

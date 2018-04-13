@@ -1,13 +1,12 @@
-$( document ).ready(function() {
-    //$('#companyButtons').css('display': 'none');
+$(document).ready(function() {
 
-    if(localStorage['allPeople'] === undefined){
+    if (localStorage['allPeople'] === undefined) {
         localStorage['allPeople'] = '';
     } else {
         allPeopleParsed = JSON.parse(localStorage['allPeople']);
         // Loop over the array addressBook and insert into the page
 
-        for(var n in allPeopleParsed){
+        for (var n in allPeopleParsed) {
             var newPerson = new Object;
             newPerson.NameSurname = allPeopleParsed[n].NameSurname;
             newPerson.PersonCompany = allPeopleParsed[n].PersonCompany;
@@ -19,13 +18,13 @@ $( document ).ready(function() {
 
     displayAllContacts();
 
-    if(localStorage['allCompanies'] === undefined){
+    if (localStorage['allCompanies'] === undefined) {
         localStorage['allCompanies'] = '';
     } else {
         allCompaniesParsed = JSON.parse(localStorage['allCompanies']);
         // Loop over the array addressBook and insert into the page
 
-        for(var n in allCompaniesParsed){
+        for (var n in allCompaniesParsed) {
             var newCompany = new Object;
             newCompany.CompanyName = allCompaniesParsed[n].CompanyName;
             newCompany.CompanyPhoneNumber = allCompaniesParsed[n].CompanyPhoneNumber;
@@ -36,7 +35,7 @@ $( document ).ready(function() {
         }
     }
 
-    $( "#AllContactsFilter" ).trigger( "click" );
+    $("#AllContactsFilter").trigger("click");
 
 });
 
@@ -51,7 +50,7 @@ function getFormCompany() {
     var inputs = $('#companyForm').serializeArray();
     var company = new Object();
 
-    $.each(inputs, function (i, input) {
+    $.each(inputs, function(i, input) {
         company[input.name] = input.value;
     });
 
@@ -62,53 +61,43 @@ function getEditFormCompany() {
     var inputs = $('#companyEditForm').serializeArray();
     var company = new Object();
 
-    $.each(inputs, function (i, input) {
+    $.each(inputs, function(i, input) {
         company[input.name] = input.value;
     });
 
     return company;
 }
 
-function newCompanytab (company) {
-    $("#tabs").append('<li class="nav-item tab"> <a class="nav-link" href="#panel-'+ nextTabPanelId+ '" data-toggle="tab" onclick="changeFilter(this)"> ' + company + '</a></li>');
+function newCompanytab(company) {
+    $("#tabs").append('<li class="nav-item tab"> <a class="nav-link" href="#panel-' + nextTabPanelId + '" data-toggle="tab" onclick="changeFilter(this)"> ' + company + '</a></li>');
     $("#tabContent").append('<div class="tab-pane" id="panel-' + nextTabPanelId + '"> </div>');
-    nextTabPanelId ++;
+    nextTabPanelId++;
 }
 
-$("#submitCompany" ).click(function() {
+$("#submitCompany").click(function() {
 
-    if ($('#CompanyName').val().length < 1){
+    if ($('#CompanyName').val().length < 1) {
         $("#submitCompany").removeAttr("data-dismiss");
         alert("Please enter the name of the Company");
-    }
-
-    else if ($('#CompanyPhoneNumber').val().length < 1){
+    } else if ($('#CompanyPhoneNumber').val().length < 1) {
         $("#submitCompany").removeAttr("data-dismiss");
         alert("Please enter a phone number");
-    }
-
-    else if ($('#CompanyEmail').val().length < 1){
+    } else if ($('#CompanyEmail').val().length < 1) {
         $("#submitCompany").removeAttr("data-dismiss");
         alert("Please enter an email address");
-    }
-
-    else if ($('#CompanyAddress').val().length < 1){
+    } else if ($('#CompanyAddress').val().length < 1) {
         $("#submitCompany").removeAttr("data-dismiss");
         alert("Please enter the address of the company");
-    }
-
-    else {
+    } else {
         $("#submitCompany").attr("data-dismiss", "modal");
         var newCompany = getFormCompany();
-        if (!validateEmail(newCompany.CompanyEmail)){
+        if (!validateEmail(newCompany.CompanyEmail)) {
             $("#submitCompany").removeAttr("data-dismiss");
             alert("Please enter a valid email address");
-        }
-        else if (!validatePhoneNumber(newCompany.CompanyPhoneNumber)){
+        } else if (!validatePhoneNumber(newCompany.CompanyPhoneNumber)) {
             $("#submitCompany").removeAttr("data-dismiss");
             alert("Please enter a valid phone number");
-        }
-        else{
+        } else {
             allCompanies.push(newCompany);
             localStorage['allCompanies'] = JSON.stringify(allCompanies);
             newCompanytab(newCompany.CompanyName);
@@ -117,15 +106,15 @@ $("#submitCompany" ).click(function() {
     }
 });
 
-function changeFilter (companyObject){
+function changeFilter(companyObject) {
     var nameOfTheFilterCompany = companyObject.innerText;
     $("#filterName").html(nameOfTheFilterCompany);
 
-    if (nameOfTheFilterCompany != "All Contacts"){
+    if (nameOfTheFilterCompany != "All Contacts") {
         var n = allCompanies.length;
         var filterCompany = new Object();
         for (var i = 0; i < n; i++) {
-            if (allCompanies[i].CompanyName == (nameOfTheFilterCompany)){
+            if (allCompanies[i].CompanyName == (nameOfTheFilterCompany)) {
                 filterCompany = allCompanies[i];
                 break;
             }
@@ -149,7 +138,7 @@ function getFormPerson() {
     var inputs = $('#personForm').serializeArray();
     var person = new Object();
 
-    $.each(inputs, function (i, input) {
+    $.each(inputs, function(i, input) {
         person[input.name] = input.value;
     });
 
@@ -160,79 +149,74 @@ function getEditFormPerson() {
     var inputs = $('#personFormEdit').serializeArray();
     var person = new Object();
 
-    $.each(inputs, function (i, input) {
+    $.each(inputs, function(i, input) {
         person[input.name] = input.value;
     });
 
     return person;
 }
 
-$( "#submitPerson" ).click(function() {
-    if ($('#NameSurname').val().length < 1){
+$("#submitPerson").click(function() {
+    if ($('#NameSurname').val().length < 1) {
         $("#submitPerson").removeAttr("data-dismiss");
         alert("Please enter the name of the person");
-    }
-
-    else if ($('#PersonCompany').val().length < 1){
+    } else if ($('#PersonCompany').val().length < 1) {
         $("#submitPerson").removeAttr("data-dismiss");
         alert("Please enter a company the person works in");
-    }
-
-    else if ($('#PersonPhoneNumber').val().length < 1){
+    } else if ($('#PersonPhoneNumber').val().length < 1) {
         $("#submitPerson").removeAttr("data-dismiss");
         alert("Please enter a phone number");
-    }
-
-    else if ($('#PersonEmail').val().length < 1){
+    } else if ($('#PersonEmail').val().length < 1) {
         $("#submitPerson").removeAttr("data-dismiss");
         alert("Please enter an email address");
-    }
-
-    else {
+    } else {
         $("#submitPerson").attr("data-dismiss", "modal");
         var newPerson = getFormPerson();
 
-        if (!validateEmail(newPerson.PersonEmail)){
+        if (!validateEmail(newPerson.PersonEmail)) {
             $("#submitPerson").removeAttr("data-dismiss");
             alert("Please enter a valid email address");
-        }
-        else if (!validatePhoneNumber(newPerson.PersonPhoneNumber)){
+        } else if (!validatePhoneNumber(newPerson.PersonPhoneNumber)) {
             $("#submitPerson").removeAttr("data-dismiss");
             alert("Please enter a valid phone number");
-        }
-
-        else {
+        } else {
             allPeople.push(newPerson);
             localStorage['allPeople'] = JSON.stringify(allPeople);
-            $( "#AllContactsFilter" ).trigger( "click" );
+            $("#AllContactsFilter").trigger("click");
             displayAllContacts();
             $('#personForm').trigger("reset");
         }
     }
 });
 
-function displayAllContacts (){
+function displayAllContacts() {
     $("#contactTableBody").find("tr").remove();
     var m = allPeople.length;
     var tempPerson = new Object();
     for (var i = 0; i < m; i++) {
         tempPerson = allPeople[i];
+
         var phoneNumber = tempPerson.PersonPhoneNumber;
         phoneNumber = phoneNumber.replace(/\s/g, '');
+
         $("#contactTableBody").append('<tr> <td> ' + tempPerson.PersonCompany + ' </td> <td> ' + tempPerson.NameSurname + ' </td> <td>' +
-        tempPerson.PersonPhoneNumber + ' </td> <td> ' + tempPerson.PersonEmail + ' </td> <th> <button type="button" class="btn btn btn-warning editPerson" data-toggle="modal" data-target="#myModal-personEdit" id = '+ phoneNumber + ' onclick = "editPerson(this)" >Edit...</button>    <button type="button" class="btn btn btn-danger" id = '+ phoneNumber + ' onclick = "deletePerson(this)" >Delete</button></th> </tr>');
+            tempPerson.PersonPhoneNumber + ' </td> <td> ' + tempPerson.PersonEmail + ' </td> <th> <button type="button" class="btn btn btn-warning editPerson" data-toggle="modal" data-target="#myModal-personEdit" id = ' + phoneNumber + ' onclick = "editPerson(this)" >Edit...</button>    <button type="button" class="btn btn btn-danger" id = ' + phoneNumber + ' onclick = "deletePerson(this)" >Delete</button></th> </tr>');
     }
 };
 
-function sortByCompanies (company) {
+function sortByCompanies(company) {
     $("#contactTableBody").find("tr").remove();
     var k = allPeople.length;
     var tempPerson = new Object();
     for (var i = 0; i < k; i++) {
-        if (allPeople[i].PersonCompany == (company)){
+        if (allPeople[i].PersonCompany == (company)) {
             tempPerson = allPeople[i];
+
+            var phoneNumber = tempPerson.PersonPhoneNumber;
+            phoneNumber = phoneNumber.replace(/\s/g, '');
+
             $("#contactTableBody").append('<tr> <td> ' + tempPerson.PersonCompany + ' </td> <td> ' + tempPerson.NameSurname + ' </td> <td>' +
-            tempPerson.PersonPhoneNumber + ' </td> <td> ' + tempPerson.PersonEmail + ' </td> <th> <button type="button" class="btn btn btn-warning editPerson" data-toggle="modal" data-target="#myModal-personEdit" id = '+ phoneNumber + ' onclick = "editPerson(this)" >Edit...</button>    <button type="button" class="btn btn btn-danger" id = '+ phoneNumber + ' onclick = "deletePerson(this)" >Delete</button></th> </tr>');
+                tempPerson.PersonPhoneNumber + ' </td> <td> ' + tempPerson.PersonEmail + ' </td> <th> <button type="button" class="btn btn btn-warning editPerson" data-toggle="modal" data-target="#myModal-personEdit" id = ' + phoneNumber + ' onclick = "editPerson(this)" >Edit...</button>    <button type="button" class="btn btn btn-danger" id = ' + phoneNumber + ' onclick = "deletePerson(this)" >Delete</button></th> </tr>');
         }
     }
 }
@@ -241,14 +225,14 @@ function deleteCompany() {
     var lastT = lastTabSelected;
     var lastC = lastCompanySelected;
 
-    $( "#AllContactsFilter" ).trigger( "click" );
+    $("#AllContactsFilter").trigger("click");
     lastT.remove();
 
     var p = allCompanies.length;
     var index;
 
     for (var i = 0; i < p; i++) {
-        if (allCompanies[i].CompanyName == (lastC)){
+        if (allCompanies[i].CompanyName == (lastC)) {
             index = i;
             break;
         }
@@ -261,12 +245,12 @@ function deleteCompany() {
     localStorage['allCompanies'] = JSON.stringify(allCompanies);
 }
 
-$( "#editCompany" ).click(function() {
+$("#editCompany").click(function() {
     var p = allCompanies.length;
     var filterCompany = new Object();
 
     for (var i = 0; i < p; i++) {
-        if (allCompanies[i].CompanyName == (lastCompanySelected)){
+        if (allCompanies[i].CompanyName == (lastCompanySelected)) {
             filterCompany = allCompanies[i];
             break;
         }
@@ -277,28 +261,22 @@ $( "#editCompany" ).click(function() {
 });
 
 function saveNewCompanyDetails() {
-    if ($('#CompanyPhoneNumberEdit').val().length < 1){
+    if ($('#CompanyPhoneNumberEdit').val().length < 1) {
         $("#submitCompany").removeAttr("data-dismiss");
         alert("Please enter a phone number");
-    }
-
-    else if ($('#CompanyEmailEdit').val().length < 1){
+    } else if ($('#CompanyEmailEdit').val().length < 1) {
         $("#submitCompany").removeAttr("data-dismiss");
         alert("Please enter an email address");
-    }
-
-    else if ($('#CompanyAddressEdit').val().length < 1){
+    } else if ($('#CompanyAddressEdit').val().length < 1) {
         $("#submitCompany").removeAttr("data-dismiss");
         alert("Please enter the address of the company");
-    }
-
-    else {
+    } else {
         $("#submitCompany").removeAttr("data-dismiss");
         var p = allCompanies.length;
         var filterCompany = new Object();
 
         for (var i = 0; i < p; i++) {
-            if (allCompanies[i].CompanyName == (lastCompanySelected)){
+            if (allCompanies[i].CompanyName == (lastCompanySelected)) {
                 filterCompany = allCompanies[i];
                 break;
             }
@@ -306,13 +284,11 @@ function saveNewCompanyDetails() {
 
         var newCompanyData = getEditFormCompany();
 
-        if (!validateEmail(newCompanyData.CompanyEmail)){
+        if (!validateEmail(newCompanyData.CompanyEmail)) {
             alert("Please enter a valid email address");
-        }
-        else if (!validatePhoneNumber(newCompanyData.CompanyPhoneNumber)){
+        } else if (!validatePhoneNumber(newCompanyData.CompanyPhoneNumber)) {
             alert("Please enter a valid phone number");
-        }
-        else {
+        } else {
             $("#CompanyModalEditSave").attr("data-dismiss", "modal");
             $("#filterInfo").html(newCompanyData.CompanyAddress + " <br> " + newCompanyData.CompanyEmail + " <br> " + newCompanyData.CompanyPhoneNumber);
             filterCompany.CompanyPhoneNumber = newCompanyData.CompanyPhoneNumber;
@@ -331,8 +307,13 @@ function deletePerson(button) {
     var index;
 
     for (var i = 0; i < r; i++) {
-        if (allPeople[i].PersonPhoneNumber == (personPhoneToBeDeleted)){
+
+        var phoneNumber = allPeople[i].PersonPhoneNumber;
+        phoneNumber = phoneNumber.replace(/\s/g, '');
+
+        if (phoneNumber == (personPhoneToBeDeleted)) {
             index = i;
+
             break;
         }
     }
@@ -341,13 +322,12 @@ function deletePerson(button) {
         allPeople.splice(index, 1);
     }
 
-    button.closest('tr').remove ();
-    localStorage['allPeople'] = JSON.stringify(allPeople);
+    button.closest('tr').remove();
 
-    // lastTabSelected.trigger( "click" );
+    localStorage['allPeople'] = JSON.stringify(allPeople);
 }
 
-function editPerson (buttonSelected){
+function editPerson(buttonSelected) {
     var t = allPeople.length;
     var filterPerson = new Object();
     var phoneOfPersonChanged = buttonSelected.id;
@@ -357,7 +337,7 @@ function editPerson (buttonSelected){
         var phoneNumber = allPeople[i].PersonPhoneNumber;
         phoneNumber = phoneNumber.replace(/\s/g, '');
 
-        if (phoneNumber == (phoneOfPersonChanged)){
+        if (phoneNumber == (phoneOfPersonChanged)) {
             filterPerson = allPeople[i];
             break;
         }
@@ -369,22 +349,16 @@ function editPerson (buttonSelected){
 }
 
 function saveNewPersonDetails() {
-    if ($('#PersonCompanyEdit').val().length < 1){
+    if ($('#PersonCompanyEdit').val().length < 1) {
         $("#submitPerson").removeAttr("data-dismiss");
         alert("Please enter a company name");
-    }
-
-    else if ($('#PersonPhoneNumberEdit').val().length < 1){
+    } else if ($('#PersonPhoneNumberEdit').val().length < 1) {
         $("#submitPerson").removeAttr("data-dismiss");
         alert("Please enter a phone number");
-    }
-
-    else if ($('#PersonEmailEdit').val().length < 1){
+    } else if ($('#PersonEmailEdit').val().length < 1) {
         $("#submitPerson").removeAttr("data-dismiss");
         alert("Please enter an email address");
-    }
-
-    else {
+    } else {
         var p = allPeople.length;
         var filterPerson = new Object();
 
@@ -392,7 +366,7 @@ function saveNewPersonDetails() {
             var phoneNumber = allPeople[i].PersonPhoneNumber;
             phoneNumber = phoneNumber.replace(/\s/g, '');
 
-            if (phoneNumber == (lastPersonEdited)){
+            if (phoneNumber == (lastPersonEdited)) {
                 filterPerson = allPeople[i];
                 break;
             }
@@ -400,23 +374,20 @@ function saveNewPersonDetails() {
 
         var newPersonData = getEditFormPerson();
 
-        if (!validateEmail(newPersonData.PersonEmail)){
+        if (!validateEmail(newPersonData.PersonEmail)) {
             $("#submitPerson").removeAttr("data-dismiss");
             alert("Please enter a valid email address");
-        }
-        else if (!validatePhoneNumber(newPersonData.PersonPhoneNumber)){
+        } else if (!validatePhoneNumber(newPersonData.PersonPhoneNumber)) {
             $("#submitPerson").removeAttr("data-dismiss");
             alert("Please enter a valid phone number");
-        }
-
-        else{
+        } else {
             $("#PersonModalEditSave").attr("data-dismiss", "modal");
             filterPerson.PersonCompany = newPersonData.PersonCompany;
             filterPerson.PersonPhoneNumber = newPersonData.PersonPhoneNumber;
             filterPerson.PersonEmail = newPersonData.PersonEmail;
             localStorage['allPeople'] = JSON.stringify(allPeople);
 
-            $(lastTabSelected).trigger( "click" );
+            $(lastTabSelected).trigger("click");
         }
 
     }
@@ -431,10 +402,3 @@ function validatePhoneNumber(phoneNumber) {
     var re = /^\(?(?:(?:0(?:0|11)\)?[\s-]?\(?|\+)44\)?[\s-]?\(?(?:0\)?[\s-]?\(?)?|0)(?:\d{2}\)?[\s-]?\d{4}[\s-]?\d{4}|\d{3}\)?[\s-]?\d{3}[\s-]?\d{3,4}|\d{4}\)?[\s-]?(?:\d{5}|\d{3}[\s-]?\d{3})|\d{5}\)?[\s-]?\d{4,5}|8(?:00[\s-]?11[\s-]?11|45[\s-]?46[\s-]?4\d))(?:(?:[\s-]?(?:x|ext\.?\s?|\#)\d+)?)$/;
     return re.test(String(phoneNumber).toLowerCase());
 }
-
-// $( ".nav-link" ).click(function() {
-//     alert("alert");
-//     var nameOfTheFilterCompany = this.text();
-//     alert("nameOfTheFilterCompany: " + nameOfTheFilterCompany);
-//     $("#filerName").html(nameOfTheFilterCompany);
-// });
