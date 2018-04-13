@@ -90,7 +90,9 @@ $("#submitCompany").click(function() {
         alert("Please enter the address of the company");
     } else {
         $("#submitCompany").attr("data-dismiss", "modal");
+
         var newCompany = getFormCompany();
+
         if (!validateEmail(newCompany.CompanyEmail)) {
             $("#submitCompany").removeAttr("data-dismiss");
             alert("Please enter a valid email address");
@@ -98,10 +100,26 @@ $("#submitCompany").click(function() {
             $("#submitCompany").removeAttr("data-dismiss");
             alert("Please enter a valid phone number");
         } else {
-            allCompanies.push(newCompany);
-            localStorage['allCompanies'] = JSON.stringify(allCompanies);
-            newCompanytab(newCompany.CompanyName);
-            $('#companyForm').trigger("reset");
+
+            var companyAlreadyExists = false;
+
+            for (var i = 0; i < allCompanies.length; i ++){
+                if (allCompanies[i].CompanyName == newCompany.CompanyName){
+                    companyAlreadyExists = true;
+                    break;
+                }
+            }
+
+            if (!companyAlreadyExists){
+                allCompanies.push(newCompany);
+                localStorage['allCompanies'] = JSON.stringify(allCompanies);
+                newCompanytab(newCompany.CompanyName);
+                $('#companyForm').trigger("reset");
+            }
+            else{
+                $('#companyForm').trigger("reset");
+                alert("This company has already been added to the address book");
+            }
         }
     }
 });
